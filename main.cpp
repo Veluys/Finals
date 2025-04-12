@@ -6,16 +6,17 @@ using namespace std;
 class Product
 {
 private:
-    string m_pName = "";
+    string m_name = "";
     int m_stock = 0;
     double m_price = 0;
 
 public:
-    string get_pName() const
+    Product(const string name = "", const int &stock = 0, const double &price = 0) : m_name(name), m_stock(stock), m_price(price) {}
+    string geName() const
     {
-        return m_pName;
+        return m_name;
     }
-    int get_pStock() const
+    int getStock() const
     {
         return m_stock;
     }
@@ -24,15 +25,15 @@ public:
         return m_price;
     }
 
-    void set_pName(const string &name)
+    void setName(const string &name)
     {
-        m_pName = name;
+        m_name = name;
     }
-    void set_pStock(const int &stock)
+    void setStock(const int &stock)
     {
         m_stock = stock;
     }
-    void set_pPrice(const double &price)
+    void setPrice(const double &price)
     {
         m_price = price;
     }
