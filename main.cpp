@@ -84,8 +84,8 @@ public:
 
         for (list<Product>::iterator i = prodList.begin(); i != prodList.end(); i++)
         {
-            cout << i->geName() << "\t" << "| ";
-            cout << i->getStock() << "\t" << "| ";
+            cout << i->geName() << "\t\t" << "| ";  
+            cout << i->getStock() << "\t\t" << "| ";
             cout << i->getPrice() << endl;
         }
     }
@@ -113,31 +113,38 @@ int main()
     Inventory inv;
 
     cout << "Hello, " << title << name << "! Welcome to the Inventory System." << endl;
-    cout << string(70, '*') << endl;
-    cout << "\t\t\t" << "Inventory System" << endl;
-    cout << string(70, '*') << endl;
-    cout << "What would you like to do?" << endl;
-    cout << "\t" << "[1] Add Product" << endl;
-    cout << "\t" << "[2] Delete Product" << endl;
-    cout << "\t" << "[3] Update Product" << endl;
-    cout << "\t" << "[4] Display Inventory" << endl;
-    cout << "\t" << "[5] Exit" << endl;
-    cout << title << name << ", please enter the number of your choice: ";
-    cin >> option;
-    cout << "\n";
-
-    switch (option)
+    do
     {
-    case 1:
-        inv.addProd();
-        break;
-    case 2:
-        inv.display();
-        break;
-    default:
-        cout << "Invalid input";
-        break;
-    }
+        cout << string(70, '*') << endl;
+        cout << "\t\t\t" << "Inventory System" << endl;
+        cout << string(70, '*') << endl;
+        cout << "What would you like to do?" << endl;
+        cout << "\t" << "[1] Add Product" << endl;
+        cout << "\t" << "[2] Delete Product" << endl;
+        cout << "\t" << "[3] Update Product" << endl;
+        cout << "\t" << "[4] Display Inventory" << endl;
+        cout << "\t" << "[5] Exit" << endl;
+        cout << title << name << ", please enter the number of your choice: ";
+        cin >> option;
+        cout << "\n";
+
+        switch (option)
+        {
+        case 1:
+            inv.addProd();
+            break;
+        case 4:
+            inv.display();
+            break;
+        case 5:
+            cout << "Exiting the program";
+            exit;
+            break;
+        default:
+            cout << "Invalid input";
+            exit;
+        }
+    } while (option != 5);
 
     return 0;
 }
