@@ -16,14 +16,11 @@ int main()
     cin >> option;
 
     cout << "\n";
-    if (option == 1)
-    {
-        cout << "Hello, Mr. " << name << "! Welcome to the Inventory System." << endl;
-    }
-    else
-    {
-        cout << "Hello, Ms. " << name << "! Welcome to the Inventory System." << endl;
-    }
+
+    string title;
+    option == 1 ? title = "Mr. " : title = "Ms. ";
+
+    cout << "Hello, " << title << name << "! Welcome to the Inventory System." << endl;
 
     return 0;
 }
