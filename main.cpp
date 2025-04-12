@@ -1,6 +1,21 @@
 #include <iostream>
 #include <string>
+#include <list>
 using namespace std;
+
+class Product
+{
+private:
+    string m_prodName = "";
+    int m_stock = 0;
+    double m_price = 0;
+};
+
+class Inventory
+{
+private:
+    list<Product> prodList;
+};
 
 int main()
 {
