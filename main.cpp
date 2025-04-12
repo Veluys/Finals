@@ -6,9 +6,36 @@ using namespace std;
 class Product
 {
 private:
-    string m_prodName = "";
+    string m_pName = "";
     int m_stock = 0;
     double m_price = 0;
+
+public:
+    string get_pName() const
+    {
+        return m_pName;
+    }
+    int get_pStock() const
+    {
+        return m_stock;
+    }
+    double get_pPrice() const
+    {
+        return m_price;
+    }
+
+    void set_pName(const string &name)
+    {
+        m_pName = name;
+    }
+    void set_pStock(const int &stock)
+    {
+        m_stock = stock;
+    }
+    void set_pPrice(const double &price)
+    {
+        m_price = price;
+    }
 };
 
 class Inventory
