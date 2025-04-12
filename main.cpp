@@ -12,6 +12,7 @@ private:
 
 public:
     Product(const string name = "", const int &stock = 0, const double &price = 0) : m_name(name), m_stock(stock), m_price(price) {}
+
     string geName() const
     {
         return m_name;
@@ -20,7 +21,7 @@ public:
     {
         return m_stock;
     }
-    double get_pPrice() const
+    double getPrice() const
     {
         return m_price;
     }
@@ -69,6 +70,24 @@ public:
         cout << "\n";
         cout << "Product Added!" << endl;
         cout << "\n";
+    }
+    void display()
+    {
+        cout << string(70, '*') << endl;
+        cout << "\t\t\t" << "Product Details: " << endl;
+        cout << string(70, '*') << endl;
+
+        cout << "Product Name" << "\t" << "| ";
+        cout << "Quantity" << "\t" << "| ";
+        cout << "Price" << endl;
+        cout << string(70, '-') << endl;
+
+        for (list<Product>::iterator i = prodList.begin(); i != prodList.end(); i++)
+        {
+            cout << i->geName() << "\t" << "| ";
+            cout << i->getStock() << "\t" << "| ";
+            cout << i->getPrice() << endl;
+        }
     }
 };
 
