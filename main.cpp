@@ -110,6 +110,8 @@ int main()
     string title;
     option == 1 ? title = "Mr. " : title = "Ms. ";
 
+    Inventory inv;
+
     cout << "Hello, " << title << name << "! Welcome to the Inventory System." << endl;
     cout << string(70, '*') << endl;
     cout << "\t\t\t" << "Inventory System" << endl;
@@ -123,5 +125,19 @@ int main()
     cout << title << name << ", please enter the number of your choice: ";
     cin >> option;
     cout << "\n";
+
+    switch (option)
+    {
+    case 1:
+        inv.addProd();
+        break;
+    case 2:
+        inv.display();
+        break;
+    default:
+        cout << "Invalid input";
+        break;
+    }
+
     return 0;
 }
