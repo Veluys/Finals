@@ -43,6 +43,33 @@ class Inventory
 {
 private:
     list<Product> prodList;
+
+public:
+    void addProd()
+    {
+        cout << string(70, '*') << endl;
+        cout << "\t\t\t" << "Adding Product" << endl;
+        cout << string(70, '*') << endl;
+
+        string name;
+        int stock;
+        double price;
+
+        cout << "Enter product name: ";
+        cin >> name;
+
+        cout << "Enter product quantity (for " << name << "): ";
+        cin >> stock;
+
+        cout << "Enter product price (for " << name << "): ";
+        cin >> price;
+
+        prodList.emplace_back(Product(name, stock, price));
+
+        cout << "\n";
+        cout << "Product Added!" << endl;
+        cout << "\n";
+    }
 };
 
 int main()
@@ -76,6 +103,6 @@ int main()
     cout << "\t" << "[5] Exit" << endl;
     cout << title << name << ", please enter the number of your choice: ";
     cin >> option;
-    cout << option;
+    cout << "\n";
     return 0;
 }
