@@ -259,7 +259,12 @@ int main()
                 cout << "Are you sure you want to exit? (Y/N): ";
                 cin >> confirmExit;
                 cout << "\n";
-                if (confirmExit == "Y" || confirmExit == "y" || confirmExit == "N" || confirmExit == "n")
+                if (confirmExit == "Y" || confirmExit == "y")
+                {
+                    cout << "Thank you for using the Inventory System.";
+                    exit(0);
+                }
+                else if (confirmExit == "N" || confirmExit == "n")
                 {
                     break;
                 }
@@ -268,11 +273,6 @@ int main()
                     cout << "Invalid input." << endl
                          << endl;
                 }
-            }
-            if (confirmExit == "Y" || confirmExit == "y")
-            {
-                cout << "Thank you for using the Inventory System.";
-                exit(0);
             }
             break;
         default:
