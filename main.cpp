@@ -72,6 +72,23 @@ public:
         cout << "Product Added!" << endl;
         cout << "\n";
     }
+    void delProd()
+    {
+        cout << string(65, '*') << endl;
+        cout << "\t\t\t" << "Deleting Product" << endl;
+        cout << string(65, '*') << endl;
+
+        string name;
+        cout << "Enter product name: ";
+        cin >> name;
+
+        prodList.remove_if([&name](Product &p)
+                           { return p.geName() == name; });
+
+        cout << "\n";
+        cout << "Product Deleted!" << endl;
+        cout << "\n";
+    }
     void display()
     {
         cout << string(65, '*') << endl;
@@ -133,6 +150,9 @@ int main()
         {
         case 1:
             inv.addProd();
+            break;
+        case 2:
+            inv.delProd();
             break;
         case 4:
             inv.display();
