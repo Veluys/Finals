@@ -20,19 +20,7 @@ public:
     {
         return m_name;
     }
-    int getStock() const
-    {
-        return m_stock;
-    }
-    double getPrice() const
-    {
-        return m_price;
-    }
 
-    void setName(const string &name)
-    {
-        m_name = name;
-    }
     void setStock(const int &stock)
     {
         m_stock = stock;
@@ -40,6 +28,12 @@ public:
     void setPrice(const double &price)
     {
         m_price = price;
+    }
+    void display()
+    {
+        cout << left << setw(21) << setfill(' ') << m_name << "| ";
+        cout << left << setw(21) << setfill(' ') << m_stock << "| ";
+        cout << m_price << endl;
     }
 };
 
@@ -122,6 +116,7 @@ public:
         string name;
         cout << "Enter product name: ";
         cin >> name;
+        cout << "\n";
 
         list<Product>::iterator prodAt = search(name);
         if (prodAt == prodList.end())
@@ -133,7 +128,6 @@ public:
 
         prodList.erase(prodAt);
 
-        cout << "\n";
         cout << "Product Deleted!" << endl
              << endl;
     }
@@ -191,9 +185,7 @@ public:
 
         for (list<Product>::iterator i = prodList.begin(); i != prodList.end(); i++)
         {
-            cout << left << setw(21) << setfill(' ') << i->geName() << "| ";
-            cout << left << setw(21) << setfill(' ') << i->getStock() << "| ";
-            cout << i->getPrice() << endl;
+            i->display();
         }
         cout << "\n";
     }
