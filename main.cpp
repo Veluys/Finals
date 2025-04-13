@@ -245,8 +245,8 @@ int main()
             }
             break;
         default:
-            cout << "Invalid input";
-            exit;
+            cout << "Invalid input! Program Terminated.";
+            exit(0);
         }
     }
 
