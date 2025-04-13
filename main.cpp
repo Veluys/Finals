@@ -2,6 +2,8 @@
 #include <string>
 #include <list>
 #include <iomanip>
+#include <cctype>
+#include <algorithm>
 using namespace std;
 
 class Product
@@ -46,6 +48,16 @@ class Inventory
 private:
     list<Product> prodList;
 
+    bool strCompare(const string &a, const string &b)
+    {
+        auto charCompare = [](char x, char y)
+        {
+            return tolower(x) == tolower(y);
+        };
+        return a.size() == b.size() &&
+               std::equal(a.begin(), a.end(), b.begin(), charCompare);
+    }
+
 public:
     void addProd()
     {
@@ -89,7 +101,42 @@ public:
         cout << "Product Deleted!" << endl;
         cout << "\n";
     }
-    void display()
+    void updProd()
+    {
+        cout << string(65, '*') << endl;
+        cout << "\t\t\t" << "Updating Product" << endl;
+        cout << string(65, '*') << endl;
+
+        string name;
+        int stock;
+        double price;
+
+        cout << "Enter product name: ";
+        cin >> name;
+
+        list<Product>::iterator itr = find_if(prodList.begin(), prodList.end(), [&](const Product &p)
+                                              { return strCompare(p.geName(), name); });
+
+        if (itr != prodList.end())
+        {
+            cout << "Enter new quantity (for " << name << "): ";
+            cin >> stock;
+            itr->setStock(stock);
+
+            cout << "Enter new price (for " << name << "): ";
+            cin >> price;
+            itr->setPrice(price);
+
+            cout << "\n";
+            cout << "Product Updated!" << endl;
+            cout << "\n";
+        }
+        else
+        {
+            cout << "Product not found." << endl;
+        }
+    }
+    void showInv()
     {
         cout << string(65, '*') << endl;
         cout << "\t\t\t" << "Product Details: " << endl;
@@ -106,6 +153,7 @@ public:
             cout << left << setw(21) << setfill(' ') << i->getStock() << "| ";
             cout << i->getPrice() << endl;
         }
+        cout << "\n";
     }
 };
 
@@ -146,6 +194,8 @@ int main()
         cin >> option;
         cout << "\n";
 
+        bool confirmExit = false;
+
         switch (option)
         {
         case 1:
@@ -154,12 +204,14 @@ int main()
         case 2:
             inv.delProd();
             break;
+        case 3:
+            inv.updProd();
+            break;
         case 4:
-            inv.display();
+            inv.showInv();
             break;
         case 5:
             cout << "Exiting the program";
-            exit;
             break;
         default:
             cout << "Invalid input";
