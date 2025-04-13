@@ -152,11 +152,12 @@ public:
 
         if (prodAt != prodList.end())
         {
-            cout << "Enter new quantity (for " << name << "): ";
+            string matchName = prodAt->geName();
+            cout << "Enter new quantity (for " << matchName << "): ";
             cin >> stock;
             prodAt->setStock(stock);
 
-            cout << "Enter new price (for " << name << "): ";
+            cout << "Enter new price (for " << matchName << "): ";
             cin >> price;
             prodAt->setPrice(price);
 
