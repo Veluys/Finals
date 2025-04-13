@@ -62,8 +62,8 @@ private:
     {
         if (prodList.empty())
         {
-            cout << "Inventory is empty!" << endl;
-            cout << "\n";
+            cout << "Inventory is empty!" << endl
+                 << endl;
             return true;
         }
         return false;
@@ -83,6 +83,16 @@ public:
         cout << "Enter product name: ";
         cin >> name;
 
+        list<Product>::iterator itr = find_if(prodList.begin(), prodList.end(), [&](const Product &p)
+                                              { return strCompare(p.geName(), name); });
+
+        if (itr != prodList.end())
+        {
+            cout << "Product already exists" << endl
+                 << endl;
+            return;
+        }
+
         cout << "Enter product quantity (for " << name << "): ";
         cin >> stock;
 
@@ -92,8 +102,8 @@ public:
         prodList.emplace_back(Product(name, stock, price));
 
         cout << "\n";
-        cout << "Product Added!" << endl;
-        cout << "\n";
+        cout << "Product Added!" << endl
+             << endl;
     }
     void delProd()
     {
@@ -108,12 +118,21 @@ public:
         cout << "Enter product name: ";
         cin >> name;
 
-        prodList.remove_if([&name](Product &p)
-                           { return p.geName() == name; });
+        list<Product>::iterator itr = find_if(prodList.begin(), prodList.end(), [&](const Product &p)
+                                              { return strCompare(p.geName(), name); });
+
+        if (itr == prodList.end())
+        {
+            cout << "Product not found!" << endl
+                 << endl;
+            return;
+        }
+
+        prodList.erase(itr);
 
         cout << "\n";
-        cout << "Product Deleted!" << endl;
-        cout << "\n";
+        cout << "Product Deleted!" << endl
+             << endl;
     }
     void updProd()
     {
@@ -145,12 +164,13 @@ public:
             itr->setPrice(price);
 
             cout << "\n";
-            cout << "Product Updated!" << endl;
-            cout << "\n";
+            cout << "Product Updated!" << endl
+                 << endl;
         }
         else
         {
-            cout << "Product not found." << endl;
+            cout << "Product not found." << endl
+                 << endl;
         }
     }
     void showInv()
@@ -254,8 +274,8 @@ int main()
                 }
                 else
                 {
-                    cout << "Invalid input." << endl;
-                    cout << "\n";
+                    cout << "Invalid input." << endl
+                         << endl;
                 }
             }
             if (confirmExit == "Y" || confirmExit == "y")
