@@ -36,11 +36,6 @@ T getNum(bool exitOnFail = false, T lower = 0, T upper = numeric_limits<T>::max(
     return numVal;
 }
 
-bool isValidNum(double numVal)
-{
-    return numVal > 0;
-}
-
 class Product
 {
 private:
@@ -128,13 +123,13 @@ public:
         cout << "Enter product quantity (for " << name << "): ";
         stock = getNum<int>();
 
-        if (!isValidNum(stock))
+        if (stock < 0)
             return;
 
         cout << "Enter product price (for " << name << "): ";
         price = getNum<double>();
 
-        if (!isValidNum(price))
+        if (price < 0)
             return;
 
         prodList.emplace_back(Product(name, stock, price));
@@ -190,7 +185,7 @@ public:
             cout << "Enter new quantity (for " << matchName << "): ";
             stock = getNum<int>();
 
-            if (!isValidNum(stock))
+            if (stock < 0)
                 return;
 
             prodAt->setStock(stock);
@@ -198,7 +193,7 @@ public:
             cout << "Enter new price (for " << matchName << "): ";
             price = getNum<double>();
 
-            if (!isValidNum(price))
+            if (price < 0)
                 return;
 
             prodAt->setPrice(price);
