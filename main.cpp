@@ -77,6 +77,16 @@ private:
         }
         return false;
     }
+    bool isGreater0(double numVal)
+    {
+        if (numVal <= 0)
+        {
+            cout << "Invalid Input." << endl
+                 << endl;
+            return false;
+        }
+        return true;
+    }
 
 public:
     void addProd()
@@ -100,8 +110,14 @@ public:
         cout << "Enter product quantity (for " << name << "): ";
         cin >> stock;
 
+        if (!isGreater0(stock))
+            return;
+
         cout << "Enter product price (for " << name << "): ";
         cin >> price;
+
+        if (!isGreater0(price))
+            return;
 
         prodList.emplace_back(Product(name, stock, price));
 
@@ -155,10 +171,18 @@ public:
             string matchName = prodAt->geName();
             cout << "Enter new quantity (for " << matchName << "): ";
             cin >> stock;
+
+            if (!isGreater0(stock))
+                return;
+
             prodAt->setStock(stock);
 
             cout << "Enter new price (for " << matchName << "): ";
             cin >> price;
+
+            if (!isGreater0(price))
+                return;
+
             prodAt->setPrice(price);
 
             cout << "\n";
@@ -218,7 +242,7 @@ int main()
     }
     else
     {
-        cout << "Invalid input! Program Terminated.";
+        cout << "Invalid Input! Program Terminated.";
         exit(0);
     }
 
@@ -271,13 +295,13 @@ int main()
                 }
                 else
                 {
-                    cout << "Invalid input." << endl
+                    cout << "Invalid Input." << endl
                          << endl;
                 }
             }
             break;
         default:
-            cout << "Invalid input! Program Terminated.";
+            cout << "Invalid Input! Program Terminated.";
             exit(0);
         }
     }
