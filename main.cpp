@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <iomanip>
 using namespace std;
 
 class Product
@@ -48,9 +49,9 @@ private:
 public:
     void addProd()
     {
-        cout << string(70, '*') << endl;
+        cout << string(65, '*') << endl;
         cout << "\t\t\t" << "Adding Product" << endl;
-        cout << string(70, '*') << endl;
+        cout << string(65, '*') << endl;
 
         string name;
         int stock;
@@ -73,19 +74,19 @@ public:
     }
     void display()
     {
-        cout << string(70, '*') << endl;
+        cout << string(65, '*') << endl;
         cout << "\t\t\t" << "Product Details: " << endl;
-        cout << string(70, '*') << endl;
+        cout << string(65, '*') << endl;
 
-        cout << "Product Name" << "\t" << "| ";
-        cout << "Quantity" << "\t" << "| ";
+        cout << left << setw(21) << setfill(' ') << "Product Name" << "| ";
+        cout << left << setw(21) << setfill(' ') << "Quantity" << "| ";
         cout << "Price" << endl;
-        cout << string(70, '-') << endl;
+        cout << string(65, '-') << endl;
 
         for (list<Product>::iterator i = prodList.begin(); i != prodList.end(); i++)
         {
-            cout << i->geName() << "\t\t" << "| ";  
-            cout << i->getStock() << "\t\t" << "| ";
+            cout << left << setw(21) << setfill(' ') << i->geName() << "| ";
+            cout << left << setw(21) << setfill(' ') << i->getStock() << "| ";
             cout << i->getPrice() << endl;
         }
     }
@@ -115,9 +116,9 @@ int main()
     cout << "Hello, " << title << name << "! Welcome to the Inventory System." << endl;
     do
     {
-        cout << string(70, '*') << endl;
+        cout << string(65, '*') << endl;
         cout << "\t\t\t" << "Inventory System" << endl;
-        cout << string(70, '*') << endl;
+        cout << string(65, '*') << endl;
         cout << "What would you like to do?" << endl;
         cout << "\t" << "[1] Add Product" << endl;
         cout << "\t" << "[2] Delete Product" << endl;
