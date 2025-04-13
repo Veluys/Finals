@@ -2,7 +2,6 @@
 #include <string>
 #include <list>
 #include <iomanip>
-#include <cctype>
 #include <algorithm>
 #include <limits>
 using namespace std;
