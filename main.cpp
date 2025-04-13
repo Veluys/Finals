@@ -179,7 +179,7 @@ int main()
     Inventory inv;
 
     cout << "Hello, " << title << name << "! Welcome to the Inventory System." << endl;
-    do
+    while (true)
     {
         cout << string(65, '*') << endl;
         cout << "\t\t\t" << "Inventory System" << endl;
@@ -194,7 +194,7 @@ int main()
         cin >> option;
         cout << "\n";
 
-        bool confirmExit = false;
+        string confirmExit;
 
         switch (option)
         {
@@ -211,13 +211,32 @@ int main()
             inv.showInv();
             break;
         case 5:
-            cout << "Exiting the program";
+            while (true)
+            {
+                cout << "Are you sure you want to exit? (Y/N): ";
+                cin >> confirmExit;
+                cout << "\n";
+                if (confirmExit == "Y" || confirmExit == "y" || confirmExit == "N" || confirmExit == "n")
+                {
+                    break;
+                }
+                else
+                {
+                    cout << "Invalid input." << endl;
+                    cout << "\n";
+                }
+            }
+            if (confirmExit == "Y" || confirmExit == "y")
+            {
+                cout << "Thank you for using the Inventory System.";
+                exit(0);
+            }
             break;
         default:
             cout << "Invalid input";
             exit;
         }
-    } while (option != 5);
+    }
 
     return 0;
 }
