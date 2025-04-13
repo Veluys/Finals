@@ -6,6 +6,13 @@
 #include <algorithm>
 using namespace std;
 
+void printHeader(const string heading)
+{
+    cout << string(65, '*') << endl;
+    cout << "\t\t\t" << heading << endl;
+    cout << string(65, '*') << endl;
+}
+
 class Product
 {
 private:
@@ -74,9 +81,7 @@ private:
 public:
     void addProd()
     {
-        cout << string(65, '*') << endl;
-        cout << "\t\t\t" << "Adding Product" << endl;
-        cout << string(65, '*') << endl;
+        printHeader("Adding Product");
 
         string name;
         int stock;
@@ -109,9 +114,7 @@ public:
         if (isEmpty())
             return;
 
-        cout << string(65, '*') << endl;
-        cout << "\t\t\t" << "Deleting Product" << endl;
-        cout << string(65, '*') << endl;
+        printHeader("Deleting Product");
 
         string name;
         cout << "Enter product name: ";
@@ -136,9 +139,7 @@ public:
         if (isEmpty())
             return;
 
-        cout << string(65, '*') << endl;
-        cout << "\t\t\t" << "Updating Product" << endl;
-        cout << string(65, '*') << endl;
+        printHeader("Updating Product");
 
         string name;
         int stock;
@@ -174,9 +175,7 @@ public:
         if (isEmpty())
             return;
 
-        cout << string(65, '*') << endl;
-        cout << "\t\t\t" << "Product Details: " << endl;
-        cout << string(65, '*') << endl;
+        printHeader("Product Details: ");
 
         cout << left << setw(21) << setfill(' ') << "Product Name" << "| ";
         cout << left << setw(21) << setfill(' ') << "Quantity" << "| ";
@@ -227,9 +226,7 @@ int main()
     cout << "Hello, " << title << name << "! Welcome to the Inventory System." << endl;
     while (true)
     {
-        cout << string(65, '*') << endl;
-        cout << "\t\t\t" << "Inventory System" << endl;
-        cout << string(65, '*') << endl;
+        printHeader("Inventory System");
         cout << "What would you like to do?" << endl;
         cout << "\t" << "[1] Add Product" << endl;
         cout << "\t" << "[2] Delete Product" << endl;
