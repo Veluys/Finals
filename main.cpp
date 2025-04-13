@@ -6,11 +6,19 @@
 #include <limits>
 using namespace std;
 
-void printHeader(const string heading)
+void printHeader(const string &heading)
 {
     cout << string(65, '*') << endl;
     cout << "\t\t\t" << heading << endl;
     cout << string(65, '*') << endl;
+}
+
+void getStr(string &text)
+{
+    do
+    {
+        getline(cin, text);
+    } while (text.empty());
 }
 
 template <typename T>
@@ -81,7 +89,7 @@ private:
                std::equal(a.begin(), a.end(), b.begin(), charCompare);
     }
 
-    list<Product>::iterator search(string &name)
+    list<Product>::iterator search(const string &name)
     {
         auto prodMatch = [&](const Product &p)
         { return strCompare(p.geName(), name); };
@@ -110,7 +118,7 @@ public:
         double price;
 
         cout << "Enter product name: ";
-        cin >> name;
+        getStr(name);
 
         if (search(name) != prodList.end())
         {
@@ -122,13 +130,13 @@ public:
         cout << "Enter product quantity (for " << name << "): ";
         stock = getNum<int>();
 
-        if (stock < 0)
+        if (stock <= 0)
             return;
 
         cout << "Enter product price (for " << name << "): ";
         price = getNum<double>();
 
-        if (price < 0)
+        if (price <= 0)
             return;
 
         prodList.emplace_back(Product(name, stock, price));
@@ -146,7 +154,8 @@ public:
 
         string name;
         cout << "Enter product name: ";
-        cin >> name;
+        getStr(name);
+
         cout << "\n";
 
         list<Product>::iterator prodAt = search(name);
@@ -174,7 +183,7 @@ public:
         double price;
 
         cout << "Enter product name: ";
-        cin >> name;
+        getStr(name);
 
         list<Product>::iterator prodAt = search(name);
 
@@ -184,7 +193,7 @@ public:
             cout << "Enter new quantity (for " << matchName << "): ";
             stock = getNum<int>();
 
-            if (stock < 0)
+            if (stock <= 0)
                 return;
 
             prodAt->setStock(stock);
@@ -192,7 +201,7 @@ public:
             cout << "Enter new price (for " << matchName << "): ";
             price = getNum<double>();
 
-            if (price < 0)
+            if (price <= 0)
                 return;
 
             prodAt->setPrice(price);
@@ -231,7 +240,13 @@ int main()
 {
     string name;
     cout << "Enter your name: ";
-    getline(cin, name);
+    getStr(name);
+
+    if (name.empty())
+    {
+        cout << "Invalid Input! Program Terminated.";
+        exit(0);
+    }
 
     cout << "Hi " << name << ", what is your courtesy title?" << endl;
     cout << "\t" << "[1] Mr." << endl;
@@ -289,8 +304,10 @@ int main()
             while (true)
             {
                 cout << "Are you sure you want to exit? (Y/N): ";
-                cin >> confirmExit;
+                getStr(confirmExit);
+
                 cout << "\n";
+
                 if (confirmExit == "Y" || confirmExit == "y")
                 {
                     cout << "Thank you for using the Inventory System.";
