@@ -174,7 +174,19 @@ int main()
     cout << "\n";
 
     string title;
-    option == 1 ? title = "Mr. " : title = "Ms. ";
+    if (option == 1)
+    {
+        title = "Mr. ";
+    }
+    else if (option == 2)
+    {
+        title = "Ms. ";
+    }
+    else
+    {
+        cout << "Invalid input! Program Terminated.";
+        exit(0);
+    }
 
     Inventory inv;
 
