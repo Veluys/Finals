@@ -2,15 +2,50 @@
 #include <string>
 #include <list>
 #include <iomanip>
-#include <cctype>
 #include <algorithm>
+#include <limits>
+
 using namespace std;
 
-void printHeader(const string heading)
+void printHeader(const string &heading)
 {
     cout << string(65, '*') << endl;
     cout << "\t\t\t" << heading << endl;
     cout << string(65, '*') << endl;
+}
+
+void getStr(string &text)
+{
+    do
+    {
+        getline(cin, text);
+    } while (text.empty());
+}
+
+template <typename T>
+T getNum(bool exitOnFail = false, T lower = 0, T upper = numeric_limits<T>::max())
+{
+    T numVal = 0;
+    cin >> numVal;
+
+    string failMsg = "Invalid input.";
+    if (exitOnFail)
+    {
+        failMsg = "Invalid input! Program Terminated.";
+    }
+
+    if (cin.fail() || !(numVal > lower && numVal <= upper))
+    {
+        cout << failMsg << endl
+             << endl;
+        cin.clear();
+        if (exitOnFail)
+        {
+            exit(0);
+        }
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    return numVal;
 }
 
 class Product
@@ -32,10 +67,12 @@ public:
     {
         m_stock = stock;
     }
+
     void setPrice(const double &price)
     {
         m_price = price;
     }
+
     void display()
     {
         cout << left << setw(21) << setfill(' ') << m_name << "| ";
@@ -55,18 +92,22 @@ private:
         {
             return tolower(x) == tolower(y);
         };
-        return a.size() == b.size() &&
-               std::equal(a.begin(), a.end(), b.begin(), charCompare);
+
+        return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin(), charCompare);
     }
 
-    list<Product>::iterator search(string &name)
+    list<Product>::iterator search(const string &name)
     {
         auto prodMatch = [&](const Product &p)
-        { return strCompare(p.geName(), name); };
+        {
+            return strCompare(p.geName(), name);
+        };
+
         list<Product>::iterator findAt = find_if(prodList.begin(), prodList.end(), prodMatch);
 
         return findAt;
     }
+
     bool isEmpty()
     {
         if (prodList.empty())
@@ -76,16 +117,6 @@ private:
             return true;
         }
         return false;
-    }
-    bool isGreater0(double numVal)
-    {
-        if (numVal <= 0)
-        {
-            cout << "Invalid Input." << endl
-                 << endl;
-            return false;
-        }
-        return true;
     }
 
 public:
@@ -98,7 +129,7 @@ public:
         double price;
 
         cout << "Enter product name: ";
-        cin >> name;
+        getStr(name);
 
         if (search(name) != prodList.end())
         {
@@ -108,16 +139,20 @@ public:
         }
 
         cout << "Enter product quantity (for " << name << "): ";
-        cin >> stock;
+        stock = getNum<int>();
 
-        if (!isGreater0(stock))
+        if (stock <= 0)
+        {
             return;
+        }
 
         cout << "Enter product price (for " << name << "): ";
-        cin >> price;
+        price = getNum<double>();
 
-        if (!isGreater0(price))
+        if (price <= 0)
+        {
             return;
+        }
 
         prodList.emplace_back(Product(name, stock, price));
 
@@ -125,16 +160,20 @@ public:
         cout << "Product Added!" << endl
              << endl;
     }
+
     void delProd()
     {
         if (isEmpty())
+        {
             return;
+        }
 
         printHeader("Deleting Product");
 
         string name;
         cout << "Enter product name: ";
-        cin >> name;
+        getStr(name);
+
         cout << "\n";
 
         list<Product>::iterator prodAt = search(name);
@@ -150,10 +189,13 @@ public:
         cout << "Product Deleted!" << endl
              << endl;
     }
+
     void updProd()
     {
         if (isEmpty())
+        {
             return;
+        }
 
         printHeader("Updating Product");
 
@@ -162,43 +204,49 @@ public:
         double price;
 
         cout << "Enter product name: ";
-        cin >> name;
+        getStr(name);
 
         list<Product>::iterator prodAt = search(name);
 
-        if (prodAt != prodList.end())
-        {
-            string matchName = prodAt->geName();
-            cout << "Enter new quantity (for " << matchName << "): ";
-            cin >> stock;
-
-            if (!isGreater0(stock))
-                return;
-
-            prodAt->setStock(stock);
-
-            cout << "Enter new price (for " << matchName << "): ";
-            cin >> price;
-
-            if (!isGreater0(price))
-                return;
-
-            prodAt->setPrice(price);
-
-            cout << "\n";
-            cout << "Product Updated!" << endl
-                 << endl;
-        }
-        else
+        if (prodAt == prodList.end())
         {
             cout << "Product not found." << endl
                  << endl;
+            return;
         }
+
+        string matchName = prodAt->geName();
+        cout << "Enter new quantity (for " << matchName << "): ";
+        stock = getNum<int>();
+
+        if (stock <= 0)
+        {
+            return;
+        }
+
+        prodAt->setStock(stock);
+
+        cout << "Enter new price (for " << matchName << "): ";
+        price = getNum<double>();
+
+        if (price <= 0)
+        {
+            return;
+        }
+
+        prodAt->setPrice(price);
+
+        cout << "\n";
+        cout << "Product Updated!" << endl
+             << endl;
     }
+
     void showInv()
     {
         if (isEmpty())
+        {
             return;
+        }
 
         printHeader("Product Details: ");
 
@@ -219,7 +267,13 @@ int main()
 {
     string name;
     cout << "Enter your name: ";
-    getline(cin, name);
+    getStr(name);
+
+    if (name.empty())
+    {
+        cout << "Invalid Input! Program Terminated.";
+        exit(0);
+    }
 
     cout << "Hi " << name << ", what is your courtesy title?" << endl;
     cout << "\t" << "[1] Mr." << endl;
@@ -227,7 +281,7 @@ int main()
 
     int option;
     cout << "Enter the number of your choice: ";
-    cin >> option;
+    option = getNum<int>(true, 0, 2);
 
     cout << "\n";
 
@@ -236,19 +290,15 @@ int main()
     {
         title = "Mr. ";
     }
-    else if (option == 2)
-    {
-        title = "Ms. ";
-    }
     else
     {
-        cout << "Invalid Input! Program Terminated.";
-        exit(0);
+        title = "Ms. ";
     }
 
     Inventory inv;
 
     cout << "Hello, " << title << name << "! Welcome to the Inventory System." << endl;
+
     while (true)
     {
         printHeader("Inventory System");
@@ -258,8 +308,9 @@ int main()
         cout << "\t" << "[3] Update Product" << endl;
         cout << "\t" << "[4] Display Inventory" << endl;
         cout << "\t" << "[5] Exit" << endl;
+
         cout << title << name << ", please enter the number of your choice: ";
-        cin >> option;
+        option = getNum<int>(true, 0, 5);
         cout << "\n";
 
         string confirmExit;
@@ -282,8 +333,10 @@ int main()
             while (true)
             {
                 cout << "Are you sure you want to exit? (Y/N): ";
-                cin >> confirmExit;
+                getStr(confirmExit);
+
                 cout << "\n";
+
                 if (confirmExit == "Y" || confirmExit == "y")
                 {
                     cout << "Thank you for using the Inventory System.";
@@ -295,14 +348,11 @@ int main()
                 }
                 else
                 {
-                    cout << "Invalid Input." << endl
+                    cout << "Invalid input." << endl
                          << endl;
                 }
             }
             break;
-        default:
-            cout << "Invalid Input! Program Terminated.";
-            exit(0);
         }
     }
     return 0;
