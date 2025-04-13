@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <cctype>
 #include <algorithm>
+#include <limits>
 using namespace std;
 
 void printHeader(const string heading)
@@ -11,6 +12,33 @@ void printHeader(const string heading)
     cout << string(65, '*') << endl;
     cout << "\t\t\t" << heading << endl;
     cout << string(65, '*') << endl;
+}
+
+template <typename T>
+T getNum(bool exitOnFail = false, T lower = 0, T upper = numeric_limits<T>::max())
+{
+    T numVal = 0;
+    cin >> numVal;
+
+    string failMsg = "Invalid input.";
+    if (exitOnFail)
+        failMsg = "Invalid input! Program Terminated.";
+
+    if (cin.fail() || !(numVal > lower && numVal <= upper))
+    {
+        cout << failMsg << endl
+             << endl;
+        cin.clear();
+        if (exitOnFail)
+            exit(0);
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    return numVal;
+}
+
+bool isValidNum(double numVal)
+{
+    return numVal > 0;
 }
 
 class Product
@@ -98,10 +126,16 @@ public:
         }
 
         cout << "Enter product quantity (for " << name << "): ";
-        cin >> stock;
+        stock = getNum<int>();
+
+        if (!isValidNum(stock))
+            return;
 
         cout << "Enter product price (for " << name << "): ";
-        cin >> price;
+        price = getNum<double>();
+
+        if (!isValidNum(price))
+            return;
 
         prodList.emplace_back(Product(name, stock, price));
 
@@ -154,11 +188,19 @@ public:
         {
             string matchName = prodAt->geName();
             cout << "Enter new quantity (for " << matchName << "): ";
-            cin >> stock;
+            stock = getNum<int>();
+
+            if (!isValidNum(stock))
+                return;
+
             prodAt->setStock(stock);
 
             cout << "Enter new price (for " << matchName << "): ";
-            cin >> price;
+            price = getNum<double>();
+
+            if (!isValidNum(price))
+                return;
+
             prodAt->setPrice(price);
 
             cout << "\n";
@@ -203,7 +245,7 @@ int main()
 
     int option;
     cout << "Enter the number of your choice: ";
-    cin >> option;
+    option = getNum<int>(true, 0, 2);
 
     cout << "\n";
 
@@ -212,14 +254,9 @@ int main()
     {
         title = "Mr. ";
     }
-    else if (option == 2)
-    {
-        title = "Ms. ";
-    }
     else
     {
-        cout << "Invalid input! Program Terminated.";
-        exit(0);
+        title = "Ms. ";
     }
 
     Inventory inv;
@@ -235,7 +272,7 @@ int main()
         cout << "\t" << "[4] Display Inventory" << endl;
         cout << "\t" << "[5] Exit" << endl;
         cout << title << name << ", please enter the number of your choice: ";
-        cin >> option;
+        option = getNum<int>(true, 0, 5);
         cout << "\n";
 
         string confirmExit;
@@ -276,9 +313,6 @@ int main()
                 }
             }
             break;
-        default:
-            cout << "Invalid input! Program Terminated.";
-            exit(0);
         }
     }
     return 0;
