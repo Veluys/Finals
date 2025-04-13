@@ -58,6 +58,14 @@ private:
                std::equal(a.begin(), a.end(), b.begin(), charCompare);
     }
 
+    list<Product>::iterator search(string &name)
+    {
+        auto prodMatch = [&](const Product &p)
+        { return strCompare(p.geName(), name); };
+        list<Product>::iterator findAt = find_if(prodList.begin(), prodList.end(), prodMatch);
+
+        return findAt;
+    }
     bool isEmpty()
     {
         if (prodList.empty())
@@ -83,10 +91,7 @@ public:
         cout << "Enter product name: ";
         cin >> name;
 
-        list<Product>::iterator itr = find_if(prodList.begin(), prodList.end(), [&](const Product &p)
-                                              { return strCompare(p.geName(), name); });
-
-        if (itr != prodList.end())
+        if (search(name) != prodList.end())
         {
             cout << "Product already exists" << endl
                  << endl;
@@ -118,17 +123,15 @@ public:
         cout << "Enter product name: ";
         cin >> name;
 
-        list<Product>::iterator itr = find_if(prodList.begin(), prodList.end(), [&](const Product &p)
-                                              { return strCompare(p.geName(), name); });
-
-        if (itr == prodList.end())
+        list<Product>::iterator prodAt = search(name);
+        if (prodAt == prodList.end())
         {
             cout << "Product not found!" << endl
                  << endl;
             return;
         }
 
-        prodList.erase(itr);
+        prodList.erase(prodAt);
 
         cout << "\n";
         cout << "Product Deleted!" << endl
@@ -150,18 +153,17 @@ public:
         cout << "Enter product name: ";
         cin >> name;
 
-        list<Product>::iterator itr = find_if(prodList.begin(), prodList.end(), [&](const Product &p)
-                                              { return strCompare(p.geName(), name); });
+        list<Product>::iterator prodAt = search(name);
 
-        if (itr != prodList.end())
+        if (prodAt != prodList.end())
         {
             cout << "Enter new quantity (for " << name << "): ";
             cin >> stock;
-            itr->setStock(stock);
+            prodAt->setStock(stock);
 
             cout << "Enter new price (for " << name << "): ";
             cin >> price;
-            itr->setPrice(price);
+            prodAt->setPrice(price);
 
             cout << "\n";
             cout << "Product Updated!" << endl
