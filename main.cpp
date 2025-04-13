@@ -58,6 +58,17 @@ private:
                std::equal(a.begin(), a.end(), b.begin(), charCompare);
     }
 
+    bool isEmpty()
+    {
+        if (prodList.empty())
+        {
+            cout << "Inventory is empty!" << endl;
+            cout << "\n";
+            return true;
+        }
+        return false;
+    }
+
 public:
     void addProd()
     {
@@ -86,6 +97,9 @@ public:
     }
     void delProd()
     {
+        if (isEmpty())
+            return;
+
         cout << string(65, '*') << endl;
         cout << "\t\t\t" << "Deleting Product" << endl;
         cout << string(65, '*') << endl;
@@ -103,6 +117,9 @@ public:
     }
     void updProd()
     {
+        if (isEmpty())
+            return;
+
         cout << string(65, '*') << endl;
         cout << "\t\t\t" << "Updating Product" << endl;
         cout << string(65, '*') << endl;
@@ -138,6 +155,9 @@ public:
     }
     void showInv()
     {
+        if (isEmpty())
+            return;
+
         cout << string(65, '*') << endl;
         cout << "\t\t\t" << "Product Details: " << endl;
         cout << string(65, '*') << endl;
@@ -249,6 +269,5 @@ int main()
             exit(0);
         }
     }
-
     return 0;
 }
