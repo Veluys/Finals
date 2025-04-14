@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <limits>
+#include <cmath>
 
 using namespace std;
 
@@ -53,7 +54,8 @@ private:
     double m_price;
 
 public:
-    Product(const string name = "", const int &stock = 0, const double &price = 0) : m_name(name), m_stock(stock), m_price(price) {}
+    Product(const string name = "", const int &stock = 0, const double &price = 0) 
+	: m_name(name), m_stock(stock), m_price(round(price * 100) / 100) {}
 
     string getName() const{
         return m_name;
