@@ -7,47 +7,38 @@
 
 using namespace std;
 
-void printHeader(const string &heading)
-{
+void printHeader(const string &heading){
     cout << string(65, '*') << endl;
     cout << "\t\t\t" << heading << endl;
     cout << string(65, '*') << endl;
 }
 
-void getStr(string &text)
-{
-    do
-    {
+void getStr(string &text){
+    do{
         getline(cin, text);
     } while (text.empty());
 }
 
-string getStr()
-{
+string getStr(){
     string text;
     getStr(text);
     return text;
 }
 
 template <typename T>
-T getNum(T upper = numeric_limits<T>::max(), bool exitOnFail = false)
-{
+T getNum(T upper = numeric_limits<T>::max(), bool exitOnFail = false){
     T numVal = 0;
     cin >> numVal;
 
     string failMsg = "Invalid input.";
-    if (exitOnFail)
-    {
+    if (exitOnFail){
         failMsg = "Invalid input! Program Terminated.";
     }
 
-    if (cin.fail() || !(numVal > 0 && numVal <= upper))
-    {
-        cout << failMsg << endl
-             << endl;
+    if (cin.fail() || !(numVal > 0 && numVal <= upper)){
+        cout << failMsg << endl << endl;
         cin.clear();
-        if (exitOnFail)
-        {
+        if (exitOnFail){
             exit(0);
         }
     }
@@ -55,8 +46,7 @@ T getNum(T upper = numeric_limits<T>::max(), bool exitOnFail = false)
     return numVal;
 }
 
-class Product
-{
+class Product{
 private:
     string m_name;
     int m_stock;
@@ -65,45 +55,38 @@ private:
 public:
     Product(const string name = "", const int &stock = 0, const double &price = 0) : m_name(name), m_stock(stock), m_price(price) {}
 
-    string getName() const
-    {
+    string getName() const{
         return m_name;
     }
 
-    void setStock(const int &stock)
-    {
+    void setStock(const int &stock){
         m_stock = stock;
     }
 
-    void setPrice(const double &price)
-    {
+    void setPrice(const double &price){
         m_price = price;
     }
 
-    void display()
-    {
+    void display(){
         cout << left << setw(21) << setfill(' ') << m_name << "| ";
         cout << left << setw(21) << setfill(' ') << m_stock << "| ";
         cout << m_price << endl;
     }
 };
 
-class Inventory
-{
+class Inventory{
 private:
     list<Product> prodList;
 
-    list<Product>::iterator search(const string &name)
-    {
-        auto prodMatch = [&](const Product &p)
-        {
+    list<Product>::iterator search(const string &name){
+        auto prodMatch = [&](const Product &p){
             const string &pName = p.getName();
 
-            if (pName.length() != name.length())
-                return false;
+            if (pName.length() != name.length()){
+            	return false;
+			}
 
-            auto charCompare = [](char x, char y)
-            {
+            auto charCompare = [](char x, char y){
                 return tolower(x) == tolower(y);
             };
 
@@ -115,59 +98,48 @@ private:
         return findAt;
     }
 
-    bool isEmpty()
-    {
-        if (prodList.empty())
-        {
-            cout << "Inventory is empty!" << endl
-                 << endl;
+    bool isEmpty(){
+        if (prodList.empty()){
+            cout << "Inventory is empty!" << endl << endl;
             return true;
         }
         return false;
     }
 
 public:
-    void addProd()
-    {
+    void addProd(){
         printHeader("Adding Product");
 
         cout << "Enter product name: ";
         string name = getStr();
 
-        if (search(name) != prodList.end())
-        {
-            cout << "Product already exists" << endl
-                 << endl;
+        if (search(name) != prodList.end()){
+            cout << "Product already exists" << endl << endl;
             return;
         }
 
         cout << "Enter product quantity (for " << name << "): ";
         int stock = getNum<int>();
 
-        if (stock <= 0)
-        {
+        if (stock <= 0){
             return;
         }
 
         cout << "Enter product price (for " << name << "): ";
         double price = getNum<double>();
 
-        if (price <= 0)
-        {
+        if (price <= 0){
             return;
         }
 
         prodList.emplace_back(Product(name, stock, price));
 
         cout << "\n";
-        cout << "Product Added!" << endl
-             << endl;
+        cout << "Product Added!" << endl << endl;
     }
 
-    void delProd()
-    {
-        if (isEmpty())
-        {
+    void delProd(){
+        if (isEmpty()){
             return;
         }
 
@@ -179,23 +151,18 @@ public:
         cout << "\n";
 
         list<Product>::iterator prodAt = search(name);
-        if (prodAt == prodList.end())
-        {
-            cout << "Product not found!" << endl
-                 << endl;
+        if (prodAt == prodList.end()){
+            cout << "Product not found!" << endl << endl;
             return;
         }
 
         prodList.erase(prodAt);
 
-        cout << "Product Deleted!" << endl
-             << endl;
+        cout << "Product Deleted!" << endl << endl;
     }
 
-    void updProd()
-    {
-        if (isEmpty())
-        {
+    void updProd(){
+        if (isEmpty()){
             return;
         }
 
@@ -206,10 +173,8 @@ public:
 
         list<Product>::iterator prodAt = search(name);
 
-        if (prodAt == prodList.end())
-        {
-            cout << "Product not found." << endl
-                 << endl;
+        if (prodAt == prodList.end()){
+            cout << "Product not found." << endl << endl;
             return;
         }
 
@@ -218,36 +183,29 @@ public:
         cout << "Enter new quantity (for " << matchName << "): ";
         int stock = getNum<int>();
 
-        if (stock > 0)
-        {
+        if (stock > 0){
             prodAt->setStock(stock);
         }
-        else
-        {
+        else{
             return;
         }
 
         cout << "Enter new price (for " << matchName << "): ";
         double price = getNum<double>();
 
-        if (price > 0)
-        {
+        if (price > 0){
             prodAt->setPrice(price);
         }
-        else
-        {
+        else{
             return;
         }
 
         cout << "\n";
-        cout << "Product Updated!" << endl
-             << endl;
+        cout << "Product Updated!" << endl << endl;
     }
 
-    void showInv()
-    {
-        if (isEmpty())
-        {
+    void showInv(){
+        if (isEmpty()){
             return;
         }
 
@@ -258,16 +216,14 @@ public:
         cout << "Price" << endl;
         cout << string(65, '-') << endl;
 
-        for (list<Product>::iterator i = prodList.begin(); i != prodList.end(); i++)
-        {
+        for (list<Product>::iterator i = prodList.begin(); i != prodList.end(); i++){
             i->display();
         }
         cout << "\n";
     }
 };
 
-int main()
-{
+int main(){
     cout << "Enter your name: ";
     string name = getStr();
 
@@ -281,12 +237,10 @@ int main()
     cout << "\n";
 
     string title;
-    if (option == 1)
-    {
+    if (option == 1){
         title = "Mr. ";
     }
-    else
-    {
+    else{
         title = "Ms. ";
     }
 
@@ -294,8 +248,7 @@ int main()
 
     cout << "Hello, " << title << name << "! Welcome to the Inventory System." << endl;
 
-    while (true)
-    {
+    while (true){
         printHeader("Inventory System");
         cout << "What would you like to do?" << endl;
         cout << "\t" << "[1] Add Product" << endl;
@@ -311,44 +264,38 @@ int main()
 
         string confirmExit;
 
-        switch (option)
-        {
-        case 1:
-            inv.addProd();
-            break;
-        case 2:
-            inv.delProd();
-            break;
-        case 3:
-            inv.updProd();
-            break;
-        case 4:
-            inv.showInv();
-            break;
-        case 5:
-            while (true)
-            {
-                cout << "Are you sure you want to exit? (Y/N): ";
-                getStr(confirmExit);
-
-                cout << "\n";
-
-                if (confirmExit == "Y" || confirmExit == "y")
-                {
-                    cout << "Thank you for using the Inventory System.";
-                    exit(0);
-                }
-                else if (confirmExit == "N" || confirmExit == "n")
-                {
-                    break;
-                }
-                else
-                {
-                    cout << "Invalid input." << endl
-                         << endl;
-                }
-            }
-            break;
+        switch (option){
+	        case 1:
+	            inv.addProd();
+	            break;
+	        case 2:
+	            inv.delProd();
+	            break;
+	        case 3:
+	            inv.updProd();
+	            break;
+	        case 4:
+	            inv.showInv();
+	            break;
+	        case 5:
+	            while (true){
+	                cout << "Are you sure you want to exit? (Y/N): ";
+	                getStr(confirmExit);
+	
+	                cout << "\n";
+	
+	                if (confirmExit == "Y" || confirmExit == "y"){
+	                    cout << "Thank you for using the Inventory System.";
+	                    exit(0);
+	                }
+	                else if (confirmExit == "N" || confirmExit == "n"){
+	                    break;
+	                }
+	                else{
+	                    cout << "Invalid Input." << endl << endl;
+	                }
+	            }
+	            break;
         }
     }
     return 0;
