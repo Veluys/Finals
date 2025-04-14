@@ -4,7 +4,6 @@
 #include <iomanip>
 #include <algorithm>
 #include <limits>
-#include <cmath>
 
 using namespace std;
 
@@ -27,7 +26,8 @@ string getStr(){
 }
 
 template <typename T>
-T getNum(T upper = numeric_limits<T>::max(), bool exitOnFail = false){
+T getNum(bool exitOnFail = false, T lower = 0, T upper = numeric_limits<T>::max())
+{
     T numVal = 0;
     cin >> numVal;
 
@@ -36,8 +36,10 @@ T getNum(T upper = numeric_limits<T>::max(), bool exitOnFail = false){
         failMsg = "Invalid input! Program Terminated.";
     }
 
-    if (cin.fail() || !(numVal > 0 && numVal <= upper)){
-        cout << failMsg << endl << endl;
+    if (cin.fail() || !(numVal > lower && numVal <= upper))
+    {
+        cout << failMsg << endl
+             << endl;
         cin.clear();
         if (exitOnFail){
             exit(0);
@@ -54,8 +56,7 @@ private:
     double m_price;
 
 public:
-    Product(const string name = "", const int &stock = 0, const double &price = 0) 
-	: m_name(name), m_stock(stock), m_price(round(price * 100) / 100) {}
+    Product(const string name = "", const int &stock = 0, const double &price = 0) : m_name(name), m_stock(stock), m_price(price) {}
 
     string getName() const{
         return m_name;
@@ -234,7 +235,7 @@ int main(){
     cout << "\t" << "[2] Ms." << endl;
 
     cout << "Enter the number of your choice: ";
-    int option = getNum<int>(2, true);
+    int option = getNum<int>(true, 0, 2);
 
     cout << "\n";
 
@@ -260,7 +261,7 @@ int main(){
         cout << "\t" << "[5] Exit" << endl;
 
         cout << title << name << ", please enter the number of your choice: ";
-        option = getNum<int>(5, true);
+        option = getNum<int>(true, 0, 5);
 
         cout << "\n";
 
