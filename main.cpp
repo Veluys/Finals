@@ -86,21 +86,21 @@ class Inventory
 private:
     list<Product> prodList;
 
-    bool strCompare(const string &a, const string &b)
-    {
-        auto charCompare = [](char x, char y)
-        {
-            return tolower(x) == tolower(y);
-        };
-
-        return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin(), charCompare);
-    }
-
     list<Product>::iterator search(const string &name)
     {
         auto prodMatch = [&](const Product &p)
         {
-            return strCompare(p.getName(), name);
+            const string &pName = p.getName();
+
+            if (pName.length() != name.length())
+                return false;
+
+            auto charCompare = [](char x, char y)
+            {
+                return tolower(x) == tolower(y);
+            };
+
+            return equal(pName.begin(), pName.end(), name.begin(), charCompare);
         };
 
         list<Product>::iterator findAt = find_if(prodList.begin(), prodList.end(), prodMatch);
