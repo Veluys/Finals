@@ -218,22 +218,26 @@ public:
         cout << "Enter new quantity (for " << matchName << "): ";
         int stock = getNum<int>();
 
-        if (stock <= 0)
+        if (stock > 0)
+        {
+            prodAt->setStock(stock);
+        }
+        else
         {
             return;
         }
-
-        prodAt->setStock(stock);
 
         cout << "Enter new price (for " << matchName << "): ";
         double price = getNum<double>();
 
-        if (price <= 0)
+        if (price > 0)
+        {
+            prodAt->setPrice(price);
+        }
+        else
         {
             return;
         }
-
-        prodAt->setPrice(price);
 
         cout << "\n";
         cout << "Product Updated!" << endl
