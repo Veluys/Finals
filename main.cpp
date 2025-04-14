@@ -30,7 +30,7 @@ string getStr()
 }
 
 template <typename T>
-T getNum(bool exitOnFail = false, T lower = 0, T upper = numeric_limits<T>::max())
+T getNum(T upper = numeric_limits<T>::max(), bool exitOnFail = false)
 {
     T numVal = 0;
     cin >> numVal;
@@ -41,7 +41,7 @@ T getNum(bool exitOnFail = false, T lower = 0, T upper = numeric_limits<T>::max(
         failMsg = "Invalid input! Program Terminated.";
     }
 
-    if (cin.fail() || !(numVal > lower && numVal <= upper))
+    if (cin.fail() || !(numVal > 0 && numVal <= upper))
     {
         cout << failMsg << endl
              << endl;
@@ -276,7 +276,7 @@ int main()
     cout << "\t" << "[2] Ms." << endl;
 
     cout << "Enter the number of your choice: ";
-    int option = getNum<int>(true, 0, 2);
+    int option = getNum<int>(2, true);
 
     cout << "\n";
 
@@ -305,7 +305,7 @@ int main()
         cout << "\t" << "[5] Exit" << endl;
 
         cout << title << name << ", please enter the number of your choice: ";
-        option = getNum<int>(true, 0, 5);
+        option = getNum<int>(5, true);
 
         cout << "\n";
 
