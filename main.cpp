@@ -58,9 +58,9 @@ T getNum(bool exitOnFail = false, T lower = 0, T upper = numeric_limits<T>::max(
 class Product
 {
 private:
-    string m_name = "";
-    int m_stock = 0;
-    double m_price = 0;
+    string m_name;
+    int m_stock;
+    double m_price;
 
 public:
     Product(const string name = "", const int &stock = 0, const double &price = 0) : m_name(name), m_stock(stock), m_price(price) {}
