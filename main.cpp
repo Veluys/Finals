@@ -22,6 +22,13 @@ void getStr(string &text)
     } while (text.empty());
 }
 
+string getStr()
+{
+    string text;
+    getStr(text);
+    return text;
+}
+
 template <typename T>
 T getNum(bool exitOnFail = false, T lower = 0, T upper = numeric_limits<T>::max())
 {
@@ -124,12 +131,8 @@ public:
     {
         printHeader("Adding Product");
 
-        string name;
-        int stock;
-        double price;
-
         cout << "Enter product name: ";
-        getStr(name);
+        string name = getStr();
 
         if (search(name) != prodList.end())
         {
@@ -139,7 +142,7 @@ public:
         }
 
         cout << "Enter product quantity (for " << name << "): ";
-        stock = getNum<int>();
+        int stock = getNum<int>();
 
         if (stock <= 0)
         {
@@ -147,7 +150,7 @@ public:
         }
 
         cout << "Enter product price (for " << name << "): ";
-        price = getNum<double>();
+        double price = getNum<double>();
 
         if (price <= 0)
         {
@@ -170,9 +173,8 @@ public:
 
         printHeader("Deleting Product");
 
-        string name;
         cout << "Enter product name: ";
-        getStr(name);
+        string name = getStr();
 
         cout << "\n";
 
@@ -199,12 +201,8 @@ public:
 
         printHeader("Updating Product");
 
-        string name;
-        int stock;
-        double price;
-
         cout << "Enter product name: ";
-        getStr(name);
+        string name = getStr();
 
         list<Product>::iterator prodAt = search(name);
 
@@ -216,8 +214,9 @@ public:
         }
 
         string matchName = prodAt->getName();
+
         cout << "Enter new quantity (for " << matchName << "): ";
-        stock = getNum<int>();
+        int stock = getNum<int>();
 
         if (stock <= 0)
         {
@@ -227,7 +226,7 @@ public:
         prodAt->setStock(stock);
 
         cout << "Enter new price (for " << matchName << "): ";
-        price = getNum<double>();
+        double price = getNum<double>();
 
         if (price <= 0)
         {
@@ -265,23 +264,15 @@ public:
 
 int main()
 {
-    string name;
     cout << "Enter your name: ";
-    getStr(name);
-
-    if (name.empty())
-    {
-        cout << "Invalid Input! Program Terminated.";
-        exit(0);
-    }
+    string name = getStr();
 
     cout << "Hi " << name << ", what is your courtesy title?" << endl;
     cout << "\t" << "[1] Mr." << endl;
     cout << "\t" << "[2] Ms." << endl;
 
-    int option;
     cout << "Enter the number of your choice: ";
-    option = getNum<int>(true, 0, 2);
+    int option = getNum<int>(true, 0, 2);
 
     cout << "\n";
 
@@ -311,6 +302,7 @@ int main()
 
         cout << title << name << ", please enter the number of your choice: ";
         option = getNum<int>(true, 0, 5);
+
         cout << "\n";
 
         string confirmExit;
