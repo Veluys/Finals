@@ -67,7 +67,7 @@ public:
         m_price = price;
     }
 
-    void display(){
+    void display() const{
         cout << left << setw(21) << setfill(' ') << m_name << "| ";
         cout << left << setw(21) << setfill(' ') << m_stock << "| ";
         cout << m_price << endl;
@@ -98,7 +98,7 @@ private:
         return findAt;
     }
 
-    bool isEmpty(){
+    bool isEmpty() const{
         if (prodList.empty()){
             cout << "Inventory is empty!" << endl << endl;
             return true;
@@ -204,7 +204,7 @@ public:
         cout << "Product Updated!" << endl << endl;
     }
 
-    void showInv(){
+    void showInv() const{
         if (isEmpty()){
             return;
         }
@@ -216,8 +216,9 @@ public:
         cout << "Price" << endl;
         cout << string(65, '-') << endl;
 
-        for (list<Product>::iterator i = prodList.begin(); i != prodList.end(); i++){
-            i->display();
+        for (const Product& product : prodList)
+        {
+            product.display();
         }
         cout << "\n";
     }
