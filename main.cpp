@@ -46,32 +46,24 @@ T getNum(T upper = numeric_limits<T>::max(), bool exitOnFail = false){
     return numVal;
 }
 
+class Inventory;
+
 class Product{
 private:
     string m_name;
     int m_stock;
     double m_price;
 
-public:
-    Product(const string name = "", const int &stock = 0, const double &price = 0) : m_name(name), m_stock(stock), m_price(price) {}
-
-    string getName() const{
-        return m_name;
-    }
-
-    void setStock(const int &stock){
-        m_stock = stock;
-    }
-
-    void setPrice(const double &price){
-        m_price = price;
-    }
+    Product(const string name = "", const int &stock = 0, const double &price = 0) 
+    : m_name(name), m_stock(stock), m_price(price) {}
 
     void display(){
         cout << left << setw(21) << setfill(' ') << m_name << "| ";
         cout << left << setw(21) << setfill(' ') << m_stock << "| ";
         cout << m_price << endl;
     }
+
+    friend class Inventory;
 };
 
 class Inventory{
@@ -80,7 +72,7 @@ private:
 
     list<Product>::iterator search(const string &name){
         auto prodMatch = [&](const Product &p){
-            const string &pName = p.getName();
+            const string &pName = p.m_name;
 
             if (pName.length() != name.length()){
             	return false;
@@ -178,13 +170,13 @@ public:
             return;
         }
 
-        string matchName = prodAt->getName();
+        string matchName = prodAt->m_name;
 
         cout << "Enter new quantity (for " << matchName << "): ";
         int stock = getNum<int>();
 
         if (stock > 0){
-            prodAt->setStock(stock);
+            prodAt->m_stock = stock;
         }
         else{
             return;
@@ -194,7 +186,7 @@ public:
         double price = getNum<double>();
 
         if (price > 0){
-            prodAt->setPrice(price);
+            prodAt->m_price = price;
         }
         else{
             return;
