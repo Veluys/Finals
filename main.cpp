@@ -53,7 +53,8 @@ private:
     double m_price;
 
 public:
-    Product(const string name = "", const int &stock = 0, const double &price = 0) : m_name(name), m_stock(stock), m_price(price) {}
+    Product(const string name = "", const int &stock = 0, const double &price = 0) 
+	: m_name(name), m_stock(stock), m_price(price) {}
 
     string getName() const{
         return m_name;
@@ -237,13 +238,7 @@ int main(){
 
     cout << "\n";
 
-    string title;
-    if (option == 1){
-        title = "Mr. ";
-    }
-    else{
-        title = "Ms. ";
-    }
+    string title = (option == 1) ? "Mr. " : "Ms. ";
 
     Inventory inv;
 
